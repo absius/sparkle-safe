@@ -17,6 +17,7 @@ import Nav from "./components/Nav";
 import { StoreProvider } from "./utils/GlobalState";
 import JewelryList from "./pages/JewelryList";
 import Success from "./pages/Success";
+import DeleteBtn from "./components/DeleteBtn/DeleteBtn";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -49,8 +50,10 @@ function App() {
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/jewelryList" component={JewelryList} />
+              <Route exact path="/jewelryItem" component={JewelryList} />
               {/* <Route exact path="/products/:id" component={Detail} /> */}
               <Route exact path="/success" component={Success} />
+              <Route exact path="/deleteBtn" component={DeleteBtn} />
               <Route component={NoMatch} />
             </Switch>
           </StoreProvider>

@@ -10,7 +10,7 @@ function Nav() {
       return (
         <ul className="flex-row">
           <li className="mx-1">
-            <Link to="/orderHistory">Order History</Link>
+            <Link to="/jewelryList">My Jewelry</Link>
           </li>
           <li className="mx-1">
             {/* this is not using the Link component to logout or user and then refresh the application to the start */}
@@ -38,10 +38,10 @@ function Nav() {
     <header className="flex-row px-1">
       <h1>
         <Link to="/">
-          <span role="img" aria-label="shopping bag">
-            🛍️
+          <span role="img" aria-label="sparkle">
+            ✨
           </span>
-          -Shop-Shop
+          Sparkle-Safe
         </Link>
       </h1>
 
