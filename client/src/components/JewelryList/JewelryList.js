@@ -53,13 +53,14 @@ function ProductList() {
     );
   }
 
+  // still needs to be updated to reflect our jewelry model
   return (
     <div className="my-2">
       <h2>Our Products:</h2>
       {state.products.length ? (
         <div className="flex-row">
-          {filterProducts().map((product) => (
-            <ProductItem
+          {filterJewelry().map((jewelry) => (
+            <JewelryItem
               key={product._id}
               _id={product._id}
               image={product.image}
