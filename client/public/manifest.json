@@ -1,0 +1,17 @@
+{
+    "short_name": "Sparkle-Safe",
+    "name": "Sparkle Safe Jewelry Cataloguer",
+    "icons": [
+      {
+        "src": "client/public/images/SPARKLESAFE.gif",
+        "sizes": "500x500",
+        "type": "image/gif"
+      }
+      
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+  }
+  
