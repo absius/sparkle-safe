@@ -5,11 +5,15 @@ export const QUERY_JEWELRY = gql`
   query getJewelry($jewelry: ID) {
     jewelry(description: $description) {
       _id
-      name
+      jewelryName
       description
-      purchasePrice
-      purveyor
-      image
+      jewelryPrice
+      assessedValue
+      jewelryAssessor
+      purchaseDate
+      jewelryWarranty
+      receiptPhoto
+      createdAt
     }
   }
 `;
@@ -19,13 +23,15 @@ export const QUERY_ALL_JEWELRY = gql`
   {
     jewelry {
       _id
-      name
+      jewelryName
       description
-      price
-      quantity
-      category {
-        name
-      }
+      jewelryPrice
+      assessedValue
+      jewelryAssessor
+      purchaseDate
+      jewelryWarranty
+      receiptPhoto
+      createdAt
     }
   }
 `;
@@ -35,17 +41,17 @@ export const QUERY_USER = gql`
     user {
       firstName
       lastName
-      orders {
+      jewelry {
         _id
+        jewelryName
+        description
+        jewelryPrice
+        assessedValue
+        jewelryAssessor
         purchaseDate
-        products {
-          _id
-          name
-          description
-          price
-          quantity
-          image
-        }
+        jewelryWarranty
+        receiptPhoto
+        createdAt
       }
     }
   }

@@ -4,24 +4,25 @@ import React from "react";
 import { useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import Jumbotron from "../components/Jumbotron";
-import { ADD_ORDER } from "../utils/mutations";
+import { ADD_JEWELRY } from "../utils/mutations";
 import { idbPromise } from "../utils/helpers";
-import CartItem from "../components/CartItem";
+import JewelryItem from "../components/JewelryItem";
+import JewelryList from "../components/JewelryList";
 
 function Success() {
-  const [addOrder] = useMutation(ADD_ORDER);
+  const [addJewelry] = useMutation(ADD_JEWELRY);
 
   useEffect(() => {
-    async function saveOrder() {
-      const cart = await idbPromise("cart", "get");
-      const products = cart.map((item) => item._id);
+    async function saveJewelry() {
+      const JewelryList = await idbPromise("jewelryList", "get");
+      const jewelry = cart.map((item) => item._id);
 
-      if (products.length) {
-        const { data } = await addOrder({ variables: { products } });
-        const productData = data.addOrder.products;
+      if (jewelry.length) {
+        const { data } = await addJewelry({ variables: { jewelry } });
+        const jewelryData = data.addJewelry.jewelry;
 
-        productData.forEach((item) => {
-          idbPromise("cart", "delete", item);
+        jewelrytData.forEach((item) => {
+          idbPromise("jewelryList", "delete", item);
         });
 
         setTimeout(() => {
@@ -30,8 +31,8 @@ function Success() {
       }
     }
 
-    saveOrder();
-  }, [addOrder]);
+    saveJewelry();
+  }, [addJewelry]);
 
   return (
     <div>
