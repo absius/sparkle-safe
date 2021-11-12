@@ -1,35 +1,52 @@
-// needs to be adjusted to match our app
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { pluralize, idbPromise } from "../../utils/helpers";
 import { useStoreContext } from "../../utils/GlobalState";
-import { ADD_TO_CART, UPDATE_CART_QUANTITY } from "../../utils/actions";
+import {
+  ADD_JEWELRY_ITEM,
+  UPDATE_JEWELRY_LIST_QUANTITY,
+} from "../../utils/actions";
 
-function ProductItem(item) {
-  const { image, name, _id, price, quantity } = item;
+function JewelryItem(item) {
+  const {
+    _id,
+    jewelryName,
+    description,
+    jewelryPrice,
+    assessedValue,
+    jewelryAssessor,
+    purchaseDate,
+    jewelryWarranty,
+    serviceDate,
+    jewelryPhoto,
+    receiptPhoto,
+    createdAt,
+  } = item;
   const [state, dispatch] = useStoreContext();
   const { cart } = state;
 
-  const addToCart = () => {
+  const addJewelryItem = () => {
     // find the cart item with the matching id
-    const itemInCart = cart.find((cartItem) => cartItem._id === _id);
+    const itemInJewelryList = cart.find(
+      (jewelryItem) => jewelryItem._id === _id
+    );
 
     // if there was a match, call UPDATE with a new purchase quantity
-    if (itemInCart) {
+    if (itemInJewelryList) {
       dispatch({
-        type: UPDATE_CART_QUANTITY,
+        type: UPDATE_JEWELRY_LIST_QUANTITY,
         _id: _id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+        jewelryListQuantity: parseInt(itemInJewelryList.jewelryQuantity) + 1,
       });
-      idbPromise("cart", "put", {
-        ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      idbPromise("jewelryList", "put", {
+        ...itemInJewelryList,
+        jewelryListQuantity:
+          parseInt(itemInJewelryList.jewelryListQuantity) + 1,
       });
     } else {
       dispatch({
-        type: ADD_TO_CART,
-        product: { ...item, purchaseQuantity: 1 },
+        type: ADD_JEWELRY_ITEM,
+        jewelryItem: { ...item, purchaseQuantity: 1 },
       });
       idbPromise("cart", "put", { ...item, purchaseQuantity: 1 });
     }
@@ -52,4 +69,4 @@ function ProductItem(item) {
   );
 }
 
-export default ProductItem;
+export default JewelryItem;

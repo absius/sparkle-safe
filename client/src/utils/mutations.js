@@ -12,7 +12,7 @@ export const LOGIN = gql`
 `;
 
 // need to update this mutation to match full model of jewelry
-export const ADD_Jewelry = gql`
+export const ADD_JEWELRY_ITEM = gql`
   mutation addJewelry($jewelry: [ID]!) {
     addJewelry(jewelry: $jewelry) {
       jewelry {

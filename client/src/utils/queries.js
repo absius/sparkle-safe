@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 // still need to update to match jewelry model
-export const QUERY_JEWELRY = gql`
+export const QUERY_JEWELRY_ITEM = gql`
   query getJewelry($jewelry: ID) {
     jewelry(description: $description) {
       _id
@@ -19,7 +19,7 @@ export const QUERY_JEWELRY = gql`
 `;
 
 // still needs to be checked against jewelry model
-export const QUERY_ALL_JEWELRY = gql`
+export const QUERY_JEWELRY_LIST = gql`
   {
     jewelry {
       _id

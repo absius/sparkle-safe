@@ -1,11 +1,9 @@
-// needs to be adjusted to match our app
-
 import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { useStoreContext } from "../../utils/GlobalState";
 import { UPDATE_JEWELRY_LIST } from "../../utils/actions";
 
-import ProductItem from "../ProductItem";
+import JewelryItem from "../ProductItem";
 import { QUERY_JEWELRY_LIST } from "../../utils/queries";
 import spinner from "../../assets/spinner.gif";
 import { idbPromise } from "../../utils/helpers";
@@ -34,46 +32,49 @@ function JewelryList() {
       idbPromise("jewelryList", "get").then((products) => {
         // use retrieved data to set global state for offline browsing
         dispatch({
-          type: UPDATE_PRODUCTS,
-          products: products,
+          type: UPDATE_JEWELRY_LIST,
+          products: jewelryList,
         });
       });
     }
   }, [data, loading, dispatch]);
 
-  function filterProducts() {
-    if (!currentCategory) {
-      return state.products;
-    }
+  // function filterJewelryList() {
 
-    return state.products.filter(
-      (product) => product.category._id === currentCategory
-    );
-  }
+  //   return state.jewelryList.filter(
+  //     (jewelryItem) => jewelryItem._id === currentCategory
+  //   );
+  // }
 
   // still needs to be updated to reflect our jewelry model
   return (
     <div className="my-2">
-      <h2>Our Products:</h2>
+      <h2>My Jewelry</h2>
       {state.products.length ? (
         <div className="flex-row">
-          {filterJewelry().map((jewelry) => (
+          {filterJewelryList().map((jewelryItem) => (
             <JewelryItem
               key={product._id}
               _id={product._id}
-              image={product.image}
-              name={product.name}
-              price={product.price}
-              quantity={product.quantity}
+              jewelryName={jewelry.name}
+              description={jewelry.description}
+              jewelryPrice={jewelry.price}
+              assessedValue={jewelry.assessedValue}
+              jewelryAssessor={jewelry.jewelryAssessor}
+              jewelryWarranty={jewelry.jewelryWarranty}
+              serviceDate={jewelry.serviceDate}
+              jewelryPhoto={jewelry.jewelryPhoto}
+              receiptPhoto={jewelry.receiptPhoto}
+              createdAt={jewelry.createdAt}
             />
           ))}
         </div>
       ) : (
-        <h3>You haven't added any products yet!</h3>
+        <h3>You haven't added any jewelry yet!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>
   );
 }
 
-export default ProductList;
+export default JewelryList;
