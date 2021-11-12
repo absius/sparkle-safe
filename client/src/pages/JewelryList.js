@@ -22,10 +22,12 @@ function JewelryList() {
             <h2>
               List of Jewelry for {user.firstName} {user.lastName}
             </h2>
-            {user.jewelry.map((jewelry) => (
-              <div key={jewelry._id} className="my-2">
+            {user.jewelryItem.map((jewelryItem) => (
+              <div key={jewelryItem._id} className="my-2">
                 <h3>
-                  {new Date(parseInt(jewelry.dateAdded)).toLocaleDateString()}
+                  {new Date(
+                    parseInt(jewelryItem.dateAdded)
+                  ).toLocaleDateString()}
                 </h3>
                 <div className="flex-row">
                   {order.jewelry.map(

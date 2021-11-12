@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { QUERY_JEWELRY } from "../utils/queries";
+import { QUERY_JEWELRY_ITEM, QUERY_JEWELRY_LIST } from "../utils/queries";
 import spinner from "../assets/spinner.gif";
 import { useStoreContext } from "../utils/GlobalState";
 import JewelryList from "../components/JewelryList";
+import JewelryItem from "../components/JewelryItem";
 import { REMOVE_JEWELRY, ADD_JEWELRY } from "../utils/actions";
 import { idbPromise } from "../utils/helpers";
 
@@ -16,68 +17,73 @@ function Detail() {
 
   const { id } = useParams();
 
-  const [currentProduct, setCurrentProduct] = useState({});
+  const [currentJewelry, setCurrentJewelry] = useState({});
 
-  const { loading, data } = useQuery(QUERY_PRODUCTS);
+  const { loading, data } = useQuery(QUERY_JEWELRY);
 
-  const { products, cart } = state;
+  const { jewelry, JewelryList } = state;
 
-  const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === id);
+  const addJewelry = () => {
+    const itemInJewelryList = JewelryList.find(
+      (JewelryItem) => JewelryItem._id === id
+    );
 
-    if (itemInCart) {
+    if (itemInJewelryList) {
       dispatch({
-        type: UPDATE_CART_QUANTITY,
+        type: UPDATE_JEWELRY_LIST_QUANTITY,
         _id: id,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+        jewelryQuantity: parseInt(itemInJewelryList.jewelryQuantity) + 1,
       });
       // if we're updating quantity, use existing item data and increment purchaseQuantity value by one
-      idbPromise("cart", "put", {
-        ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      idbPromise("jewelryList", "put", {
+        ...itemInJewelryList,
+        jewelryQuantity: parseInt(itemInJewelryList.jewelryQuantity) + 1,
       });
     } else {
       dispatch({
-        type: ADD_TO_CART,
-        product: { ...currentProduct, purchaseQuantity: 1 },
+        type: ADD_JEWELRY,
+        product: { ...currentJewelry, jewelryQuantity: 1 },
       });
       // if product isn't in the cart yet, add it to the current shopping cart in IndexedDB
-      idbPromise("cart", "put", { ...currentProduct, purchaseQuantity: 1 });
+      idbPromise("jewelryList", "put", {
+        ...currentJewelry,
+        jewelryQuantity: 1,
+      });
     }
   };
 
-  const removeFromCart = () => {
+  const removeFromJewelryList = () => {
     dispatch({
-      type: REMOVE_FROM_CART,
-      _id: currentProduct._id,
+      type: REMOVE_FROM_JEWELRY_LIST,
+      _id: currentJewelry._id,
     });
 
     // upon removal from cart, delete item form IndexedDB using the `currentProduct._id` to locate what to remove
-    idbPromise("cart", "delete", { ...currentProduct });
+    idbPromise("jewelryList", "delete", { ...currentJewelry });
   };
 
   useEffect(() => {
     // already in global store
-    if (products.length) {
-      setCurrentProduct(products.find((product) => product._id === id));
+    if (JewelryList.length) {
+      setCurrentJewelry(jewelryList.find((jewelry) => jewelry._id === id));
     }
     // retrieved from server
     else if (data) {
       dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
+        type: UPDATE_JEWELRY_LIST,
+        products: data.jewelry_list,
       });
 
-      data.products.forEach((product) => {
-        idbPromise("products", "put", product);
+      data.jewelryList.forEach((jewelry) => {
+        idbPromise("jewelryList", "put", jewelry);
       });
     }
     // get cache from idb
     else if (!loading) {
-      idbPromise("products", "get").then((indexedProducts) => {
+      idbPromise("jewelryList", "get").then((indexedJewelryList) => {
         dispatch({
-          type: UPDATE_PRODUCTS,
-          products: indexedProducts,
+          type: UPDATE_JEWELRY_LIST,
+          products: indexedJewelryList,
         });
       });
     }
