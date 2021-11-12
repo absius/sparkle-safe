@@ -15,14 +15,17 @@ export const LOGIN = gql`
 export const ADD_Jewelry = gql`
   mutation addJewelry($jewelry: [ID]!) {
     addJewelry(jewelry: $jewelry) {
-      dateAdded
       jewelry {
         _id
-        name
+        jewelryName
         description
-        purchasePrice
-        purveyor
-        image
+        jewelryPrice
+        assessedValue
+        jewelryAssessor
+        purchaseDate
+        jewelryWarranty
+        receiptPhoto
+        createdAt
       }
     }
   }

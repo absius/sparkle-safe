@@ -4,7 +4,7 @@ const JewelrySchema = new Schema({
   jewelryName: {
     type: String,
     required: true,
-    ktrim: true,
+    trim: true,
   },
 
   description: {

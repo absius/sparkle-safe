@@ -4,16 +4,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { QUERY_PRODUCTS } from "../utils/queries";
+import { QUERY_JEWELRY } from "../utils/queries";
 import spinner from "../assets/spinner.gif";
 import { useStoreContext } from "../utils/GlobalState";
-import Cart from "../components/Cart";
-import {
-  REMOVE_FROM_CART,
-  UPDATE_CART_QUANTITY,
-  ADD_TO_CART,
-  UPDATE_PRODUCTS,
-} from "../utils/actions";
+import JewelryList from "../components/JewelryList";
+import { REMOVE_JEWELRY, ADD_JEWELRY } from "../utils/actions";
 import { idbPromise } from "../utils/helpers";
 
 function Detail() {
