@@ -1,28 +1,4 @@
-
-const mongoose = require("mongoose");
-
-const app = express();
-const PORT = process.env.PORT || 3001;
-
-const { User } = require("./models");
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/sparkle-safedb",
-  {
-    useFindandModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
-
-mongoose.set("debug", true);
-
-app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}!`);
-=======
+const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
 
@@ -59,5 +35,4 @@ db.once("open", () => {
     console.log(`API server running on port ${PORT}!`);
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });
-
-
+});
