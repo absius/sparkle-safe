@@ -47,3 +47,7 @@ const JewelrySchema = new Schema({
     default: Date.now,
   },
 });
+
+const Jewelry = model("Jewelry", JewelrySchema);
+
+module.exports = Jewelry;

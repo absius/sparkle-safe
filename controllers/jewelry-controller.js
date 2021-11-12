@@ -40,6 +40,21 @@ const jewelryController = {
       })
       .catch((err) => res.status(400).json(err));
   },
+
+  // Delete Jewelry Log
+  deleteJewelry({ params }, res) {
+    Jewelry.findOneAndDelete({ _id: params.id })
+      .then((dbJewelryData) => {
+        if (!dbJewelryData) {
+          res
+            .status(404)
+            .json({ message: "No jewelry log found with this id" });
+          return;
+        }
+        res.json(dbJewelryData);
+      })
+      .catch((err) => res.status(400).json(err));
+  },
 };
 
 module.exports = jewelryController;
